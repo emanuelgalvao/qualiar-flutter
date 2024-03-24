@@ -1,5 +1,6 @@
 import 'package:air_pollution_app/screen/home_screen.dart';
-import 'package:air_pollution_app/utils/AppRoutes.dart';
+import 'package:air_pollution_app/screen/location_details_screen.dart';
+import 'package:air_pollution_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         AppRoutes.home: (_) => const HomeScreen(),
+        AppRoutes.locationDetails: (_) => const LocationDetailsScreen(),
       },
     );
   }
