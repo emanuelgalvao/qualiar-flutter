@@ -10,12 +10,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Air Pollution'),
-        backgroundColor: Colors.orange,
-      ),
       body: Container(
-        padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
@@ -23,25 +18,39 @@ class HomeScreen extends StatelessWidget {
               ),
               fit: BoxFit.cover),
         ),
-        child: const Column(
+        child: Column(
           children: [
-            OfflineWarning(),
-            CardFavoriteLocation(
-              title: 'Curitiba, PR',
-              currentValue: 77,
-              minValue: 60,
-              maxValue: 80,
-              nextDays: {
-                '24/03': 76,
-                '25/03': 78,
-                '26/03': 70,
-                '27/03': 75,
-                '28/03': 73,
-              },
+            AppBar(
+              title: const Text(
+                'Air Pollution',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.black54,
             ),
-            CardOtherLocation(
-              title: 'São Paulo, SP',
-              value: 80,
+            Container(
+              margin: const EdgeInsets.all(10),
+              child: const Column(
+                children: [
+                  OfflineWarning(),
+                  CardFavoriteLocation(
+                    title: 'Curitiba, PR',
+                    currentValue: 77,
+                    minValue: 60,
+                    maxValue: 80,
+                    nextDays: {
+                      '24/03': 76,
+                      '25/03': 78,
+                      '26/03': 70,
+                      '27/03': 75,
+                      '28/03': 73,
+                    },
+                  ),
+                  CardOtherLocation(
+                    title: 'São Paulo, SP',
+                    value: 80,
+                  )
+                ],
+              ),
             )
           ],
         ),

@@ -1,5 +1,4 @@
 import 'package:air_pollution_app/components/home/card_favorite/current_value.dart';
-import 'package:air_pollution_app/components/home/card_favorite/day_item.dart';
 import 'package:air_pollution_app/components/home/card_favorite/days_list.dart';
 import 'package:air_pollution_app/components/home/card_favorite/min_max_value.dart';
 import 'package:air_pollution_app/components/glass_container.dart';
@@ -27,6 +26,7 @@ class CardFavoriteLocation extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed(AppRoutes.locationDetails),
       child: GlassContainer(
+        blur: 10,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

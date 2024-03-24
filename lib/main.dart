@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         AppRoutes.home: (_) => const HomeScreen(),
-        AppRoutes.locationDetails: (_) => const LocationDetailsScreen(),
+        AppRoutes.locationDetails: (_) => const LocationDetailsScreen()
       },
     );
   }
