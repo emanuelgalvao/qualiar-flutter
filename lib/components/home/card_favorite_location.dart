@@ -1,5 +1,6 @@
 import 'package:air_pollution_app/components/home/card_favorite/current_value.dart';
 import 'package:air_pollution_app/components/home/card_favorite/day_item.dart';
+import 'package:air_pollution_app/components/home/card_favorite/days_list.dart';
 import 'package:air_pollution_app/components/home/card_favorite/min_max_value.dart';
 import 'package:air_pollution_app/components/glass_container.dart';
 import 'package:air_pollution_app/utils/app_routes.dart';
@@ -67,16 +68,7 @@ class CardFavoriteLocation extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: nextDays.keys.map((day) {
-                  final value = nextDays[day] ?? 0;
-                  return DayItem(
-                    day: day,
-                    value: value,
-                  );
-                }).toList(),
-              )
+              DaysList(days: nextDays)
             ],
           ),
         ),

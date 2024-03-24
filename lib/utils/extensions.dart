@@ -35,6 +35,23 @@ extension ScreenData on AirPollutionLevel {
         return 'Perigoso';
     }
   }
+
+  String get description {
+    switch (this) {
+      case AirPollutionLevel.good:
+        return 'A qualidade do ar é considerada satisfatória e a poluição atmosférica representa pouco ou nenhum risco.';
+      case AirPollutionLevel.moderate:
+        return 'Moderado	A qualidade do ar é aceitável, no entanto, para alguns poluentes, pode haver um problema moderado de saúde para um número muito pequeno de pessoas que são invulgarmente sensíveis à poluição atmosférica.';
+      case AirPollutionLevel.unhealthyForSensitiveGroups:
+        return 'Membros de grupos sensíveis podem sofrer efeitos na saúde. O público em geral provavelmente não será afetado.';
+      case AirPollutionLevel.unhealthy:
+        return 'Todos podem começar a sentir efeitos na saúde; membros de grupos sensíveis podem sofrer efeitos mais graves para a saúde.';
+      case AirPollutionLevel.veryUnhealthy:
+        return 'Advertências de saúde sobre condições de emergência. Toda a população tem maior probabilidade de ser afetada.';
+      case AirPollutionLevel.hazardous:
+        return 'Alerta de saúde: todos podem sofrer efeitos mais graves para a saúde.';
+    }
+  }
 }
 
 extension AirPollutionLevelValidation on int {
