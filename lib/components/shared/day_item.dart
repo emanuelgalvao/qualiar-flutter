@@ -1,10 +1,11 @@
-import 'package:air_pollution_app/components/glass_container.dart';
 import 'package:air_pollution_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
+import 'glass_container.dart';
+
 class DayItem extends StatelessWidget {
   final String day;
-  final int value;
+  final double value;
 
   const DayItem({
     super.key,
@@ -27,7 +28,7 @@ class DayItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                value.toString(),
+                value == 0.0 ? "?" : value.toString(),
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,

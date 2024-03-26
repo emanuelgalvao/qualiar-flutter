@@ -1,11 +1,12 @@
 import 'package:air_pollution_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
-import '../../glass_container.dart';
+import '../../shared/glass_container.dart';
+
 
 class MinMaxValue extends StatelessWidget {
   final String title;
-  final int value;
+  final double value;
 
   const MinMaxValue({
     super.key,

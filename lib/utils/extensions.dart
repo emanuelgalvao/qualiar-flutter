@@ -16,6 +16,8 @@ extension ScreenData on AirPollutionLevel {
         return Colors.purple;
       case AirPollutionLevel.hazardous:
         return Colors.black;
+      case AirPollutionLevel.unknown:
+        return Colors.white;
     }
   }
 
@@ -33,6 +35,8 @@ extension ScreenData on AirPollutionLevel {
         return 'Muito prejudicial à saúde';
       case AirPollutionLevel.hazardous:
         return 'Perigoso';
+      case AirPollutionLevel.unknown:
+        return 'Desconhecido';
     }
   }
 
@@ -50,11 +54,32 @@ extension ScreenData on AirPollutionLevel {
         return 'Advertências de saúde sobre condições de emergência. Toda a população tem maior probabilidade de ser afetada.';
       case AirPollutionLevel.hazardous:
         return 'Alerta de saúde: todos podem sofrer efeitos mais graves para a saúde.';
+      case AirPollutionLevel.unknown:
+        return '';
+    }
+  }
+
+  String get valuesRange {
+    switch (this) {
+      case AirPollutionLevel.good:
+        return '0-50';
+      case AirPollutionLevel.moderate:
+        return '51-100';
+      case AirPollutionLevel.unhealthyForSensitiveGroups:
+        return '101-150';
+      case AirPollutionLevel.unhealthy:
+        return '151-200';
+      case AirPollutionLevel.veryUnhealthy:
+        return '201-300';
+      case AirPollutionLevel.hazardous:
+        return '300+';
+      case AirPollutionLevel.unknown:
+        return '';
     }
   }
 }
 
-extension AirPollutionLevelValidation on int {
+extension AirPollutionLevelValidation on double {
   AirPollutionLevel get airPollutionLevel {
     if (this > 300) {
       return AirPollutionLevel.hazardous;
@@ -70,6 +95,9 @@ extension AirPollutionLevelValidation on int {
     }
     if (this > 50 && this <= 100) {
       return AirPollutionLevel.moderate;
+    }
+    if (this == 0) {
+      return AirPollutionLevel.unknown;
     }
     return AirPollutionLevel.good;
   }

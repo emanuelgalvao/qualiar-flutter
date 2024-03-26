@@ -4,5 +4,6 @@ enum AirPollutionLevel {
   unhealthyForSensitiveGroups,
   unhealthy,
   veryUnhealthy,
-  hazardous
+  hazardous,
+  unknown,
 }

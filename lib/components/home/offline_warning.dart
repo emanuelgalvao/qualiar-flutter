@@ -1,5 +1,5 @@
-import 'package:air_pollution_app/components/glass_container.dart';
 import 'package:flutter/material.dart';
+import '../shared/glass_container.dart';
 
 
 class OfflineWarning extends StatelessWidget {

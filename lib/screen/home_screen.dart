@@ -1,14 +1,40 @@
 import 'package:air_pollution_app/components/home/card_other_location.dart';
-import 'package:air_pollution_app/components/home/offline_warning.dart';
+import 'package:air_pollution_app/data/air_pollution_data.dart';
+import 'package:air_pollution_app/data/location_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../components/home/card_favorite_location.dart';
+import '../components/shared/glass_container.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    final locationsProvider = Provider.of<LocationList>(context, listen: false);
+
+    Provider.of<AirPollutionData>(context, listen: false)
+        .getHomeData(locationsProvider.locations)
+        .then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var homeData = Provider.of<AirPollutionData>(context).homeData;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -18,42 +44,56 @@ class HomeScreen extends StatelessWidget {
               ),
               fit: BoxFit.cover),
         ),
-        child: Column(
-          children: [
-            AppBar(
-              title: const Text(
-                'Air Pollution',
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.black54,
-            ),
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: const Column(
-                children: [
-                  OfflineWarning(),
-                  CardFavoriteLocation(
-                    title: 'Curitiba, PR',
-                    currentValue: 77,
-                    minValue: 60,
-                    maxValue: 80,
-                    nextDays: {
-                      '24/03': 76,
-                      '25/03': 78,
-                      '26/03': 70,
-                      '27/03': 75,
-                      '28/03': 73,
-                    },
+        child: _isLoading
+            ? Center(
+                child: GlassContainer(
+                  child: Container(
+                    height: 80,
+                    padding: const EdgeInsets.all(20),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.white,
+                        ),
+                        Text(
+                          'Carregando...',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
-                  CardOtherLocation(
-                    title: 'São Paulo, SP',
-                    value: 80,
+                ),
+              )
+            : Column(
+                children: [
+                  AppBar(
+                    title: const Text(
+                      'Qualidade do Ar Brasil',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.black54,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        CardFavoriteLocation(
+                            favoriteLocation: homeData!.favoriteLocation),
+                        Column(
+                          children: homeData.otherLocations
+                              .map(
+                                (location) => CardOtherLocation(
+                                  otherLocation: location,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }

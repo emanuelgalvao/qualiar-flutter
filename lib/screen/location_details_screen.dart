@@ -1,18 +1,37 @@
 import 'package:air_pollution_app/components/details/card_details_section.dart';
-import 'package:air_pollution_app/components/glass_container.dart';
-import 'package:air_pollution_app/components/home/card_favorite/days_list.dart';
 import 'package:air_pollution_app/components/home/card_favorite/min_max_value.dart';
 import 'package:air_pollution_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../components/home/card_favorite/current_value.dart';
-import '../components/home/card_favorite/day_item.dart';
+import '../components/shared/days_list.dart';
+import '../components/shared/glass_container.dart';
+import '../data/air_pollution_data.dart';
 
-class LocationDetailsScreen extends StatelessWidget {
+class LocationDetailsScreen extends StatefulWidget {
   const LocationDetailsScreen({super.key});
 
   @override
+  State<LocationDetailsScreen> createState() => _LocationDetailsScreenState();
+}
+
+class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
+  bool _isLoading = true;
+
+  @override
   Widget build(BuildContext context) {
+    var locationsDetails = Provider.of<AirPollutionData>(context).detailsData;
+
+    final locationId = (ModalRoute.of(context)?.settings.arguments as int) ?? 0;
+    Provider.of<AirPollutionData>(context, listen: false)
+        .getDetailsData(locationId)
+        .then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -34,71 +53,90 @@ class LocationDetailsScreen extends StatelessWidget {
             ),
             Container(
                 margin: const EdgeInsets.all(10),
-                child: Column(children: [
-                  GlassContainer(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'Curitiba, PR',
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                child: _isLoading
+                    ? Center(
+                        child: GlassContainer(
+                          child: Container(
+                            height: 80,
+                            padding: const EdgeInsets.all(20),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator.adaptive(
+                                  backgroundColor: Colors.white,
+                                ),
+                                Text(
+                                  'Carregando...',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
                             ),
                           ),
-                          Container(
-                              width: 200,
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: const CurrentValue(value: 150)),
-                          Text(
-                            150.airPollutionLevel.description,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
+                        ),
+                      )
+                    : Column(children: [
+                        GlassContainer(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '${locationsDetails!.city.name}, ${locationsDetails.city.uf}',
+                                  style: const TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Container(
+                                    width: 200,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: CurrentValue(
+                                        value:
+                                            locationsDetails.values.current)),
+                                Text(
+                                  locationsDetails.values.current
+                                      .airPollutionLevel.description,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const CardDetailsSection(
-                    title: 'Mínimo e máximo do dia',
-                    child: Row(
-                      children: [
-                        Expanded(child: MinMaxValue(title: 'Min.', value: 55)),
-                        SizedBox(width: 10),
-                        Expanded(child: MinMaxValue(title: 'Max.', value: 150)),
-                      ],
-                    ),
-                  ),
-                  const CardDetailsSection(
-                    title: 'Últimos 5 dias',
-                    child: DaysList(
-                      days: {
-                        '24/03': 76,
-                        '25/03': 78,
-                        '26/03': 70,
-                        '27/03': 75,
-                        '28/03': 73,
-                      },
-                    ),
-                  ),
-                  const CardDetailsSection(
-                    title: 'Próximos 5 dias',
-                    child: DaysList(
-                      days: {
-                        '24/03': 76,
-                        '25/03': 78,
-                        '26/03': 70,
-                        '27/03': 75,
-                        '28/03': 73,
-                      },
-                    ),
-                  ),
-                ]))
+                        ),
+                        CardDetailsSection(
+                          title: 'Mínimo e máximo do dia',
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: MinMaxValue(
+                                      title: 'Min.',
+                                      value: locationsDetails.values.min)),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                  child: MinMaxValue(
+                                      title: 'Max.',
+                                      value: locationsDetails.values.max)),
+                            ],
+                          ),
+                        ),
+                        CardDetailsSection(
+                          title: 'Últimos 5 dias',
+                          child: DaysList(
+                            days: locationsDetails.previousDays,
+                          ),
+                        ),
+                        CardDetailsSection(
+                          title: 'Próximos 5 dias',
+                          child: DaysList(
+                            days: locationsDetails.nextDays,
+                          ),
+                        ),
+                      ]))
           ],
         ),
       ),

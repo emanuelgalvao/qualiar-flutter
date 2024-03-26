@@ -1,9 +1,10 @@
+import 'package:air_pollution_app/model/home_data.dart';
 import 'package:flutter/material.dart';
 
 import 'day_item.dart';
 
 class DaysList extends StatelessWidget {
-  final Map<String, int> days;
+  final List<DaysData> days;
 
   const DaysList({
     super.key,
@@ -14,11 +15,10 @@ class DaysList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: days.keys.map((day) {
-        final value = days[day] ?? 0;
+      children: days.map((day) {
         return DayItem(
-          day: day,
-          value: value,
+          day: day.day,
+          value: day.value,
         );
       }).toList(),
     );

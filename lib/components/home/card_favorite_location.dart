@@ -1,30 +1,25 @@
 import 'package:air_pollution_app/components/home/card_favorite/current_value.dart';
-import 'package:air_pollution_app/components/home/card_favorite/days_list.dart';
 import 'package:air_pollution_app/components/home/card_favorite/min_max_value.dart';
-import 'package:air_pollution_app/components/glass_container.dart';
+import 'package:air_pollution_app/model/home_data.dart';
+import 'package:air_pollution_app/utils/app_icons.dart';
 import 'package:air_pollution_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
+import '../shared/days_list.dart';
+import '../shared/glass_container.dart';
+
 class CardFavoriteLocation extends StatelessWidget {
-  final String title;
-  final int currentValue;
-  final int minValue;
-  final int maxValue;
-  final Map<String, int> nextDays;
+  final FavoriteLocationHomeData favoriteLocation;
 
   const CardFavoriteLocation({
     super.key,
-    required this.title,
-    required this.currentValue,
-    required this.minValue,
-    required this.maxValue,
-    required this.nextDays,
+    required this.favoriteLocation
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(AppRoutes.locationDetails),
+      onTap: () => Navigator.of(context).pushNamed(AppRoutes.locationDetails, arguments: favoriteLocation.city.id),
       child: GlassContainer(
         blur: 10,
         child: Padding(
@@ -36,15 +31,15 @@ class CardFavoriteLocation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    title,
+                    '${favoriteLocation.city.name}, ${favoriteLocation.city.uf}',
                     style: const TextStyle(
                       fontSize: 30,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Icon(
-                    Icons.navigate_next,
+                  Icon(
+                    AppIcons.go,
                     color: Colors.white,
                     size: 30,
                   ),
@@ -54,21 +49,21 @@ class CardFavoriteLocation extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
-                    CurrentValue(value: currentValue),
+                    CurrentValue(value: favoriteLocation.values.current),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         children: [
-                          MinMaxValue(title: 'Min.', value: minValue),
+                          MinMaxValue(title: 'Min.', value: favoriteLocation.values.min),
                           const SizedBox(height: 10),
-                          MinMaxValue(title: 'Max.', value: maxValue)
+                          MinMaxValue(title: 'Max.', value: favoriteLocation.values.max)
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              DaysList(days: nextDays)
+              DaysList(days: favoriteLocation.nextDays)
             ],
           ),
         ),

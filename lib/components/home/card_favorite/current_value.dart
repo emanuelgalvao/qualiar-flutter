@@ -1,10 +1,10 @@
 import 'package:air_pollution_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
-import '../../glass_container.dart';
+import '../../shared/glass_container.dart';
 
 class CurrentValue extends StatelessWidget {
-  final int value;
+  final double value;
 
   const CurrentValue({
     super.key,

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../shared/glass_container.dart';
-
-
-class CardDetailsSection extends StatelessWidget {
+class AboutCard extends StatelessWidget {
   final String title;
   final Widget child;
 
-  const CardDetailsSection({
+  const AboutCard({
     super.key,
     required this.title,
     required this.child,
@@ -15,17 +12,17 @@ class CardDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassContainer(
-      margin: EdgeInsets.only(top: 10),
-      child: Padding(
+    return Card(
+      margin: const EdgeInsets.all(8),
+      child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Text(
               title,
               style: const TextStyle(
-                fontSize: 18,
-                color: Colors.white,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
