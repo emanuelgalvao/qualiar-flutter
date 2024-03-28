@@ -1,8 +1,10 @@
+import 'package:air_pollution_app/data/air_pollution_data.dart';
 import 'package:air_pollution_app/model/home_data.dart';
 import 'package:air_pollution_app/utils/app_icons.dart';
 import 'package:air_pollution_app/utils/app_routes.dart';
-import 'package:air_pollution_app/utils/extensions.dart';
+import 'package:air_pollution_app/utils/air_pollution_level_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../shared/glass_container.dart';
 
@@ -18,7 +20,8 @@ class CardOtherLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(AppRoutes.locationDetails, arguments: otherLocation.id);
+        Provider.of<AirPollutionData>(context, listen: false).selectLocation(otherLocation.id);
+        Navigator.of(context).pushNamed(AppRoutes.locationDetails);
       },
       child: GlassContainer(
         margin: const EdgeInsets.only(top: 10),
@@ -36,17 +39,12 @@ class CardOtherLocation extends StatelessWidget {
                     children: [
                       Text(
                         otherLocation.value.toString(),
-                        style: const TextStyle(
-                          fontSize: 26,
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
                         otherLocation.value.airPollutionLevel.message,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -56,11 +54,7 @@ class CardOtherLocation extends StatelessWidget {
               Expanded(
                 child: Text(
                   '${otherLocation.name}, ${otherLocation.uf}',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
               Icon(

@@ -1,6 +1,7 @@
 import 'package:air_pollution_app/data/location_list.dart';
 import 'package:air_pollution_app/utils/app_icons.dart';
 import 'package:air_pollution_app/utils/app_routes.dart';
+import 'package:air_pollution_app/utils/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,29 +13,17 @@ class LocationsScreen extends StatelessWidget {
     var locationsProvider = Provider.of<LocationList>(context);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Colors.black54,
-        foregroundColor: Colors.white,
-        title: Text('Localizações'),
+        title: const Text('Meus Locais'),
         actions: [
           IconButton(
             onPressed: () {
               if (locationsProvider.count >= 5) {
-                showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return AlertDialog.adaptive(
-                      title: const Text('Máximo atingido!'),
-                      content: const Text(
-                          'Você pode ter no máximo 5 localidades!\nExclua alguma caso deseje adicionar uma nova!'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(false),
-                          child: const Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
+                showAdaptativeDialog(
+                  context,
+                  'Máximo atingido!',
+                  'Você pode ter no máximo 5 locais!\nExclua algum caso deseje adicionar um novo!',
                 );
                 return;
               } else {
@@ -52,7 +41,10 @@ class LocationsScreen extends StatelessWidget {
             return Column(
               children: [
                 ListTile(
-                  title: Text('${location.name}, ${location.uf}'),
+                  title: Text(
+                    '${location.name}, ${location.uf}',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                   trailing: Container(
                     width: 100,
                     child: Row(
@@ -72,22 +64,10 @@ class LocationsScreen extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             if (location.isFavorite) {
-                              showDialog(
-                                context: context,
-                                builder: (ctx) {
-                                  return AlertDialog.adaptive(
-                                    title: const Text('Erro ao excluir!'),
-                                    content: const Text(
-                                        'Você não pode excluir seu local favorito!\nEscolha outro local favorito antes de exluir esse!'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                              showAdaptativeDialog(
+                                context,
+                                'Erro ao excluir!',
+                                'Você não pode excluir seu local favorito!\nEscolha outro local como favorito antes de exluir esse!',
                               );
                             } else {
                               locationsProvider.removeLocation(location.id);

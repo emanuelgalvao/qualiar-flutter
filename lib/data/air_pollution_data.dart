@@ -10,6 +10,16 @@ class AirPollutionData with ChangeNotifier {
   HomeData? _homeData;
   DetailsData? _detailsData;
 
+  int? _selectedLocation;
+
+  int? get selectedLocation {
+    return _selectedLocation;
+  }
+
+  void selectLocation(id) {
+    _selectedLocation = id;
+  }
+
   HomeData? get homeData {
     return _homeData;
   }
@@ -20,7 +30,7 @@ class AirPollutionData with ChangeNotifier {
 
   Future<void> getHomeData(List<LocationModel> locations) async {
     final favoriteLocationId =
-        locations.where((location) => location.isFavorite).first.id;
+        locations.where((location) => location.isFavorite).firstOrNull?.id;
     final otherLocations = locations
         .where((location) => !location.isFavorite)
         .map((location) => location.id);

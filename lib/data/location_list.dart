@@ -1,21 +1,11 @@
+import 'dart:convert';
+
 import 'package:air_pollution_app/model/location_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationList with ChangeNotifier {
-
-  final List<LocationModel> _locations = [
-    LocationModel(
-      id: 3266,
-      name: 'Curitiba',
-      uf: 'PR',
-      isFavorite: true,
-    ),
-    LocationModel(
-      id: 5296,
-      name: 'São Paulo',
-      uf: 'SP',
-    ),
-  ];
+  List<LocationModel> _locations = [];
 
   List<LocationModel> get locations {
     return [..._locations];
@@ -25,17 +15,22 @@ class LocationList with ChangeNotifier {
     return _locations.length;
   }
 
+  setLocations(List<LocationModel> locations) {
+    _locations = locations;
+  }
+
   void addLocation(LocationModel location) {
     _locations.add(location);
     notifyListeners();
+    _saveLocations();
   }
 
   void removeLocation(int locationId) {
-    
     _locations.removeWhere(
       (location) => location.id == locationId,
     );
     notifyListeners();
+    _saveLocations();
   }
 
   void handleFavorite(int locationId) {
@@ -46,9 +41,18 @@ class LocationList with ChangeNotifier {
     });
     _locations.where((location) {
       return location.id == locationId;
-    }).forEach((location) { 
+    }).forEach((location) {
       location.isFavorite = true;
     });
+    _saveLocations();
     notifyListeners();
+  }
+
+  _saveLocations() async {
+    var preferences = await SharedPreferences.getInstance();
+    var stringLocations = jsonEncode({
+      'locations': _locations
+    });
+    preferences.setString('locations', stringLocations);
   }
 }

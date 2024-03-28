@@ -21,10 +21,8 @@ class AboutCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.labelLarge,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
             child

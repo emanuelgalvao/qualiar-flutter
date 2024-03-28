@@ -1,4 +1,4 @@
-import 'package:air_pollution_app/utils/extensions.dart';
+import 'package:air_pollution_app/utils/air_pollution_level_extensions.dart';
 import 'package:flutter/material.dart';
 
 import 'glass_container.dart';
@@ -29,15 +29,11 @@ class DayItem extends StatelessWidget {
             children: [
               Text(
                 value == 0.0 ? "?" : value.toString(),
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               Text(
                 day,
-                style: const TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
           ),

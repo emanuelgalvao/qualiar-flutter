@@ -13,6 +13,8 @@ class AppIcons {
 
   // Home
   static final go = isIos ? CupertinoIcons.chevron_right : Icons.arrow_forward;
+  static final light = isIos ? CupertinoIcons.sun_max : Icons.light_mode;
+  static final dark = isIos ? CupertinoIcons.moon : Icons.dark_mode;
 
   // Locations
   static final add = isIos ? CupertinoIcons.add : Icons.add;

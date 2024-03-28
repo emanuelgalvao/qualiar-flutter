@@ -18,7 +18,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     super.initState();
-    _screens = [HomeScreen(), LocationsScreen(), AboutScreen()];
+    _screens = const [HomeScreen(), LocationsScreen(), AboutScreen()];
   }
 
   @override
@@ -28,9 +28,6 @@ class _TabsScreenState extends State<TabsScreen> {
       child: Scaffold(
         body: _screens[_selectedTabIndex],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
           currentIndex: _selectedTabIndex,
           onTap: (index) {
             setState(() {

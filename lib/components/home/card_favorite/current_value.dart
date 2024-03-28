@@ -1,4 +1,4 @@
-import 'package:air_pollution_app/utils/extensions.dart';
+import 'package:air_pollution_app/utils/air_pollution_level_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/glass_container.dart';
@@ -13,8 +13,7 @@ class CurrentValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GlassContainer(
+    return GlassContainer(
         color: value.airPollutionLevel.color,
         child: Container(
           height: 100,
@@ -24,24 +23,16 @@ class CurrentValue extends StatelessWidget {
             children: [
               Text(
                 value.toString(),
-                style: const TextStyle(
-                  fontSize: 40,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 value.airPollutionLevel.message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
         ),
-      ),
     );
   }
 }

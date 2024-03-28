@@ -1,4 +1,4 @@
-import 'package:air_pollution_app/utils/extensions.dart';
+import 'package:air_pollution_app/utils/air_pollution_level_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/glass_container.dart';
@@ -24,10 +24,7 @@ class MinMaxValue extends StatelessWidget {
         child: Center(
           child: Text(
             '$title $value',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
       ),

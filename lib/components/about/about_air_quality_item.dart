@@ -1,4 +1,4 @@
-import 'package:air_pollution_app/utils/extensions.dart';
+import 'package:air_pollution_app/utils/air_pollution_level_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/air_pollution_level.dart';
@@ -39,8 +39,7 @@ class AboutAirQualityItem extends StatelessWidget {
                 child: Center(
                   child: Text(
                     airPollutionLevel.valuesRange,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ),
@@ -50,9 +49,7 @@ class AboutAirQualityItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   airPollutionLevel.message,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -63,6 +60,7 @@ class AboutAirQualityItem extends StatelessWidget {
           ),
           Text(
             airPollutionLevel.description,
+            style: Theme.of(context).textTheme.labelSmall,
             textAlign: TextAlign.start,
           ),
         ],

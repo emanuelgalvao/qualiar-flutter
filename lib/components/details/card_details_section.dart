@@ -23,11 +23,7 @@ class CardDetailsSection extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.titleSmall
             ),
             const SizedBox(height: 10),
             child

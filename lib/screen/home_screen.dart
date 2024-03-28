@@ -1,11 +1,19 @@
-import 'package:air_pollution_app/components/home/card_other_location.dart';
+import 'dart:convert';
+
+import 'package:air_pollution_app/components/shared/loading_container.dart';
+import 'package:air_pollution_app/components/shared/other_locations_list.dart';
 import 'package:air_pollution_app/data/air_pollution_data.dart';
 import 'package:air_pollution_app/data/location_list.dart';
+import 'package:air_pollution_app/data/theme_provider.dart';
+import 'package:air_pollution_app/model/home_data.dart';
+import 'package:air_pollution_app/model/location_model.dart';
+import 'package:air_pollution_app/utils/app_icons.dart';
+import 'package:air_pollution_app/utils/default_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/home/card_favorite_location.dart';
-import '../components/shared/glass_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,84 +24,94 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
+  HomeData? homeData;
 
-  @override
-  void initState() {
-    super.initState();
+  _getHomeData() {
     final locationsProvider = Provider.of<LocationList>(context, listen: false);
-
-    Provider.of<AirPollutionData>(context, listen: false)
+    final airPollutionDataProvider =
+        Provider.of<AirPollutionData>(context, listen: false);
+    airPollutionDataProvider
         .getHomeData(locationsProvider.locations)
         .then((value) {
       setState(() {
+        homeData = airPollutionDataProvider.homeData;
         _isLoading = false;
       });
     });
   }
 
+  Future<void> _loadLocations() async {
+    final preferences = await SharedPreferences.getInstance();
+    var savedLocations = preferences.getString('locations');
+    List<LocationModel> locations = [];
+    if (savedLocations == null) {
+      locations = defaultLocations;
+    } else {
+      jsonDecode(savedLocations)['locations'].forEach((element) {
+        locations.add(LocationModel.fromJson(element));
+      });
+    }
+    Provider.of<LocationList>(context, listen: false).setLocations(locations);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocations().then((value) => _getHomeData());
+  }
+
   @override
   Widget build(BuildContext context) {
-    var homeData = Provider.of<AirPollutionData>(context).homeData;
-
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(
-                'https://i.pinimg.com/originals/58/02/ff/5802ff4cb2c6fa5d68d3f113812a4533.jpg',
-              ),
-              fit: BoxFit.cover),
-        ),
-        child: _isLoading
-            ? Center(
-                child: GlassContainer(
-                  child: Container(
-                    height: 80,
-                    padding: const EdgeInsets.all(20),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator.adaptive(
-                          backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            child: Image.network(
+              'https://i.pinimg.com/originals/58/02/ff/5802ff4cb2c6fa5d68d3f113812a4533.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color:
+                    Theme.of(context).colorScheme.background.withOpacity(0.4)),
+            child: _isLoading
+                ? const LoadingContainer()
+                : Column(
+                    children: [
+                      AppBar(
+                        title: const Text(
+                          'Ar+',
                         ),
-                        Text(
-                          'Carregando...',
-                          style: TextStyle(color: Colors.white),
+                        actions: [
+                          IconButton(
+                            onPressed: () {
+                              Provider.of<ThemeProvider>(context, listen: false).swapTheme();
+                            },
+                            icon: Icon(
+                              Provider.of<ThemeProvider>(context, listen: false).isDarkMode
+                                  ? AppIcons.light
+                                  : AppIcons.dark,
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            CardFavoriteLocation(
+                                favoriteLocation: homeData!.favoriteLocation),
+                            OtherLocationsList(
+                                otherLocations: homeData!.otherLocations),
+                          ],
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                ),
-              )
-            : Column(
-                children: [
-                  AppBar(
-                    title: const Text(
-                      'Qualidade do Ar Brasil',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.black54,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        CardFavoriteLocation(
-                            favoriteLocation: homeData!.favoriteLocation),
-                        Column(
-                          children: homeData.otherLocations
-                              .map(
-                                (location) => CardOtherLocation(
-                                  otherLocation: location,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+          ),
+        ],
       ),
     );
   }

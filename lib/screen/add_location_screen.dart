@@ -6,7 +6,8 @@ import 'package:air_pollution_app/model/city_model.dart';
 import 'package:air_pollution_app/model/location_model.dart';
 import 'package:air_pollution_app/model/state_model.dart';
 import 'package:air_pollution_app/utils/app_icons.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:air_pollution_app/utils/show_dialog.dart';
+import 'package:air_pollution_app/utils/show_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,21 +32,10 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
       listen: false,
     );
     if (_selectedCity == null) {
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog.adaptive(
-            title: const Text('Nenhuma cidade selecionada!'),
-            content: const Text(
-                'Você precisa selecionar uma cidade para adicionar a localização!'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Ok'),
-              ),
-            ],
-          );
-        },
+      showAdaptativeDialog(
+        context,
+        'Nenhuma cidade selecionada!',
+        'Você precisa selecionar uma cidade para adicionar o local!',
       );
       return;
     } else {
@@ -60,57 +50,30 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     }
   }
 
-  void _showCupertinoPicker({
-    required BuildContext context,
-    required Function(int) onSelectedItemChanged,
-    required List<Widget> children,
-  }) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (ctx) {
-        return SizedBox(
-          width: double.infinity,
-          height: 300,
-          child: CupertinoPicker(
-            itemExtent: 30,
-            backgroundColor: Colors.white,
-            scrollController: FixedExtentScrollController(),
-            onSelectedItemChanged: onSelectedItemChanged,
-            children: children,
-          ),
-        );
-      },
-    );
-  }
-
   void _selectState(BuildContext context) {
     final statesCitiesProvider = Provider.of<StatesCitiesList>(
       context,
       listen: false,
     );
 
-    if (Platform.isIOS) {
-      _showCupertinoPicker(
-        context: context,
-        onSelectedItemChanged: (index) {
-          setState(() {
-            _selectedState = statesCitiesProvider.states[index];
-            _selectedCity = null;
-          });
-          statesCitiesProvider.clearCities();
-        },
-        children: statesCitiesProvider.states.map(
-          (state) {
-            return Text(state.name);
-          },
-        ).toList(),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return SimpleDialog(
-            children: statesCitiesProvider.states.map(
+    showAdaptiveSelector(
+      context: context,
+      onSelectedItemChanged: Platform.isIOS
+          ? (index) {
+              setState(() {
+                _selectedState = statesCitiesProvider.states[index];
+                _selectedCity = null;
+              });
+              statesCitiesProvider.clearCities();
+            }
+          : null,
+      children: Platform.isIOS
+          ? statesCitiesProvider.states.map(
+              (state) {
+                return Text(state.name);
+              },
+            ).toList()
+          : statesCitiesProvider.states.map(
               (state) {
                 return SimpleDialogOption(
                   onPressed: () {
@@ -125,38 +88,31 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 );
               },
             ).toList(),
-          );
-        },
-      );
-    }
+    );
   }
 
-  void _showCityPicker() {
+  void _showCitySelector(BuildContext context) {
     final statesCitiesProvider = Provider.of<StatesCitiesList>(
       context,
       listen: false,
     );
 
-    if (Platform.isIOS) {
-      _showCupertinoPicker(
-        context: context,
-        onSelectedItemChanged: (index) {
+    showAdaptiveSelector(
+      context: context,
+      onSelectedItemChanged: Platform.isIOS
+          ? (index) {
           setState(() {
             _selectedCity = statesCitiesProvider.cities[index];
           });
-        },
-        children: statesCitiesProvider.cities.map(
+        }
+          : null,
+      children: Platform.isIOS
+          ? statesCitiesProvider.cities.map(
           (city) {
             return Text(city.name);
           },
-        ).toList(),
-      );
-    } else {
-      showDialog(
-          context: context,
-          builder: (ctx) {
-            return SimpleDialog(
-              children: statesCitiesProvider.cities.map(
+        ).toList()
+          : statesCitiesProvider.cities.map(
                 (city) {
                   return SimpleDialogOption(
                     onPressed: () {
@@ -165,13 +121,11 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                       });
                       Navigator.of(context).pop();
                     },
-                    child: Text(city.name),
+                    child: Text(city.name, style: TextStyle(color: Colors.red),),
                   );
                 },
               ).toList(),
-            );
-          });
-    }
+    );
   }
 
   void _selectCity(BuildContext context) {
@@ -181,21 +135,10 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     );
 
     if (_selectedState == null) {
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog.adaptive(
-            title: const Text('Nenhum estado selecionado!'),
-            content: const Text(
-                'Você precisa selecionar um estado antes de escolher a cidade!'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Ok'),
-              ),
-            ],
-          );
-        },
+      showAdaptativeDialog(
+        context,
+        'Nenhum estado selecionado!',
+        'Você precisa selecionar um estado antes de escolher a cidade!',
       );
       return;
     }
@@ -208,10 +151,10 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
         setState(() {
           _isLoadingCities = false;
         });
-        _showCityPicker();
+        _showCitySelector(context);
       });
     } else {
-      _showCityPicker();
+      _showCitySelector(context);
     }
   }
 
@@ -232,6 +175,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text('Adicionar'),
         actions: [
@@ -250,21 +194,18 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
               width: double.infinity,
               child: Column(
                 children: [
-                  const Text(
+                  Text(
                     'Qual o estado?',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const SizedBox(height: 10),
                   Text(
                     _selectedState == null
                         ? 'Nenhum estado selecionado.'
                         : _selectedState!.name,
-                    style: const TextStyle(fontSize: 18),
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   CustomButton(
                     label: _selectedState == null
                         ? 'Selecionar Estado'
@@ -272,12 +213,9 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                     onPressed: () => _selectState(context),
                   ),
                   const SizedBox(height: 30),
-                  const Text(
+                  Text(
                     'Qual a cidade?',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const SizedBox(height: 10),
                   _isLoadingCities
@@ -288,9 +226,9 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                               _selectedCity == null
                                   ? 'Nenhuma cidade selecionada.'
                                   : _selectedCity!.name,
-                              style: const TextStyle(fontSize: 18),
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 20),
                             CustomButton(
                               label: _selectedCity == null
                                   ? 'Selecionar Cidade'

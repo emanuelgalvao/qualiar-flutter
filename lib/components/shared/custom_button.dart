@@ -22,7 +22,11 @@ class CustomButton extends StatelessWidget {
           )
         : ElevatedButton(
             onPressed: onPressed,
-            child: Text(label),
+            child: Text(label, style: Theme.of(context).textTheme.bodySmall,),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Colors.white
+            )
           );
   }
 }
