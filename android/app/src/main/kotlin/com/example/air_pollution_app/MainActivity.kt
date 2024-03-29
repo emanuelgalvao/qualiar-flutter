@@ -1,4 +1,4 @@
-package com.example.air_pollution_app
+package com.emanuelgalvao.qualiar
 
 import io.flutter.embedding.android.FlutterActivity
 

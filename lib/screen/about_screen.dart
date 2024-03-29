@@ -9,6 +9,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text('Sobre'),
       ),
@@ -40,7 +41,7 @@ class AboutScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Qualidade do Ar Brasil',
+                    'QualiAr Brasil',
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   Text(

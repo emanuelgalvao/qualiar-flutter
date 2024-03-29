@@ -84,7 +84,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                     statesCitiesProvider.clearCities();
                     Navigator.of(context).pop();
                   },
-                  child: Text(state.name),
+                  child: Text(state.name, style: Theme.of(context).textTheme.labelMedium),
                 );
               },
             ).toList(),
@@ -121,7 +121,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                       });
                       Navigator.of(context).pop();
                     },
-                    child: Text(city.name, style: TextStyle(color: Colors.red),),
+                    child: Text(city.name, style: Theme.of(context).textTheme.labelMedium),
                   );
                 },
               ).toList(),

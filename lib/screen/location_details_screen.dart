@@ -44,7 +44,7 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Ar+',
+          'QualiAr Brasil',
         ),
       ),
       body: Stack(
@@ -62,48 +62,50 @@ class _LocationDetailsScreenState extends State<LocationDetailsScreen> {
                     Theme.of(context).colorScheme.background.withOpacity(0.4)),
             child: _isLoading
                 ? const LoadingContainer()
-                : Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            CardDetailsHeader(detailsData: locationDetails!),
-                            CardDetailsSection(
-                              title: 'Mínimo e máximo do dia',
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: MinMaxValue(
-                                        title: 'Min.',
-                                        value: locationDetails!.values.min),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: MinMaxValue(
-                                        title: 'Max.',
-                                        value: locationDetails!.values.max),
-                                  ),
-                                ],
+                : SingleChildScrollView(
+                  child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              CardDetailsHeader(detailsData: locationDetails!),
+                              CardDetailsSection(
+                                title: 'Mínimo e máximo do dia',
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: MinMaxValue(
+                                          title: 'Min.',
+                                          value: locationDetails!.values.min),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: MinMaxValue(
+                                          title: 'Max.',
+                                          value: locationDetails!.values.max),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            CardDetailsSection(
-                              title: 'Últimos 5 dias',
-                              child: DaysList(
-                                days: locationDetails!.previousDays,
+                              CardDetailsSection(
+                                title: 'Últimos 5 dias',
+                                child: DaysList(
+                                  days: locationDetails!.previousDays,
+                                ),
                               ),
-                            ),
-                            CardDetailsSection(
-                              title: 'Próximos 5 dias',
-                              child: DaysList(
-                                days: locationDetails!.nextDays,
+                              CardDetailsSection(
+                                title: 'Próximos 5 dias',
+                                child: DaysList(
+                                  days: locationDetails!.nextDays,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                ),
           ),
         ],
       ),

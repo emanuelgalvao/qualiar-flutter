@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         builder: (ctx, theme, _) => MaterialApp(
           title: 'Flutter Demo',
           theme: theme.getTheme,
+          debugShowCheckedModeBanner: false,
           routes: {
             AppRoutes.home: (_) => const TabsScreen(),
             AppRoutes.locationDetails: (_) => const LocationDetailsScreen(),

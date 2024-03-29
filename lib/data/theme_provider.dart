@@ -76,15 +76,15 @@ class ThemeProvider with ChangeNotifier {
             primaryColor: Colors.green,
   );
 
-  ThemeData dark = ThemeData.light().copyWith(
+  ThemeData dark = ThemeData.dark().copyWith(
     appBarTheme: const AppBarTheme(
         backgroundColor: Colors.black54,
         foregroundColor: Colors.white,
         titleTextStyle: TextStyle(fontSize: 20, color: Colors.white)),
     colorScheme: ThemeData.light().colorScheme.copyWith(
           primary: Colors.green,
-          surface: const Color(0xFFf5f5f5),
-          background: const Color(0xFF1a1a1a),
+          surface: const Color(0xFF1a1a1a),
+          background: const Color(0xFF2a2a2a),
         ),
     textTheme: ThemeData.light().textTheme.copyWith(
           titleLarge: const TextStyle(
@@ -121,7 +121,7 @@ class ThemeProvider with ChangeNotifier {
           ),
           labelSmall: const TextStyle(
             fontSize: 14,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
     bottomNavigationBarTheme:

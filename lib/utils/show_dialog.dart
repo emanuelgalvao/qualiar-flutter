@@ -9,14 +9,15 @@ showAdaptativeDialog(
     context: context,
     builder: (ctx) {
       return AlertDialog.adaptive(
-        title: Text(title),
-        content: Text(description),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text(title, style: Theme.of(context).textTheme.labelLarge,),
+        content: Text(description, style: Theme.of(context).textTheme.labelMedium,),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
             child: Text(
               'OK',
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ),
         ],

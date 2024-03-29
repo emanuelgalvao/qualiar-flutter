@@ -78,38 +78,40 @@ class _HomeScreenState extends State<HomeScreen> {
                     Theme.of(context).colorScheme.background.withOpacity(0.4)),
             child: _isLoading
                 ? const LoadingContainer()
-                : Column(
-                    children: [
-                      AppBar(
-                        title: const Text(
-                          'Ar+',
-                        ),
-                        actions: [
-                          IconButton(
-                            onPressed: () {
-                              Provider.of<ThemeProvider>(context, listen: false).swapTheme();
-                            },
-                            icon: Icon(
-                              Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-                                  ? AppIcons.light
-                                  : AppIcons.dark,
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            CardFavoriteLocation(
-                                favoriteLocation: homeData!.favoriteLocation),
-                            OtherLocationsList(
-                                otherLocations: homeData!.otherLocations),
+                : SingleChildScrollView(
+                  child: Column(
+                      children: [
+                        AppBar(
+                          title: const Text(
+                            'QualiAr Brasil',
+                          ),
+                          actions: [
+                            IconButton(
+                              onPressed: () {
+                                Provider.of<ThemeProvider>(context, listen: false).swapTheme();
+                              },
+                              icon: Icon(
+                                Provider.of<ThemeProvider>(context, listen: false).isDarkMode
+                                    ? AppIcons.light
+                                    : AppIcons.dark,
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              CardFavoriteLocation(
+                                  favoriteLocation: homeData!.favoriteLocation),
+                              OtherLocationsList(
+                                  otherLocations: homeData!.otherLocations),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                ),
           ),
         ],
       ),
