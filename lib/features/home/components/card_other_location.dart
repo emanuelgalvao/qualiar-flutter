@@ -35,13 +35,14 @@ class CardOtherLocation extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        otherLocation.value.toString(),
+                        otherLocation.value.toStringAsFixed(2),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
-                        otherLocation.value.airPollutionLevel.message,
+                        '${otherLocation.value.airPollutionLevel.message}\n',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodySmall,
+                        maxLines: 2,
                       ),
                     ],
                   ),

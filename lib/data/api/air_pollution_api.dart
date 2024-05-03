@@ -11,6 +11,7 @@ import '../model/city_model.dart';
 import '../model/days_data.dart';
 import '../model/state_model.dart';
 import '../model/values_data.dart';
+import '../model/world_city_data.dart';
 
 class AirPollutionApi extends IAirPollutionApi {
   @override
@@ -75,5 +76,12 @@ class AirPollutionApi extends IAirPollutionApi {
           .map((day) => DaysData(day: day['day'], value: (double.tryParse(day['value'].toString()) ?? 0.0)))
           .toList(),
     );
+  }
+
+  @override
+  Future<List<WorldCityData>> getWorldCitiesData() async {
+    final response = await http.get(Uri.parse(Endpoints.worldCities));
+    final responseJson = await jsonDecode(response.body);
+    return WorldCityData.fromJsonList(responseJson);
   }
 }

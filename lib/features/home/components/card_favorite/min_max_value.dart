@@ -22,7 +22,7 @@ class MinMaxValue extends StatelessWidget {
         height: 45,
         child: Center(
           child: Text(
-            '$title $value',
+            '$title ${value.toStringAsFixed(2)}',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),

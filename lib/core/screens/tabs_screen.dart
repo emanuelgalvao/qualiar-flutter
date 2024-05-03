@@ -1,6 +1,7 @@
 import 'package:air_pollution_app/features/about/screen/about_screen.dart';
 import 'package:air_pollution_app/features/home/screen/home_screen.dart';
 import 'package:air_pollution_app/features/locations/screens/locations_screen.dart';
+import 'package:air_pollution_app/features/world_cities/screen/world_cities_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../util/app_icons.dart';
@@ -22,6 +23,7 @@ class _TabsScreenState extends State<TabsScreen> {
     _screens = [
       HomeScreen(),
       LocationsScreen(),
+      WorldCitiesScreen(),
       AboutScreen()
     ];
   }
@@ -47,6 +49,10 @@ class _TabsScreenState extends State<TabsScreen> {
             BottomNavigationBarItem(
               icon: Icon(AppIcons.myLocations),
               label: 'Meus Locais',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(AppIcons.worldCities),
+              label: 'Mundo',
             ),
             BottomNavigationBarItem(
               icon: Icon(AppIcons.about),

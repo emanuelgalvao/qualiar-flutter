@@ -4,4 +4,5 @@ class Endpoints {
   static const cities = '$baseUrl/:uf/cities';
   static const homeData = '$baseUrl/home';
   static const detailsData = '$baseUrl/locationDetails/:id';
+  static const worldCities = '$baseUrl/worldCities';
 }
