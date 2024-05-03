@@ -22,7 +22,7 @@ class CurrentValue extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                value.toString(),
+                value.toStringAsFixed(2),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(

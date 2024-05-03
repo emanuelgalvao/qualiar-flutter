@@ -46,7 +46,7 @@ class AboutScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   Text(
-                    'Versão: 1.0.0',
+                    'Versão: 1.0.1',
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   Text(
