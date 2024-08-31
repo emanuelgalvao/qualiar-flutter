@@ -1,11 +1,7 @@
-import 'package:flutter/widgets.dart';
-
-import '../../core/util/app_icons.dart';
 import 'favorite_location_home_data.dart';
 import 'other_location_home_data.dart';
 
 class HomeData {
-  IconData toolbarIcon = AppIcons.light;
   final FavoriteLocationHomeData favoriteLocation;
   final List<OtherLocationHomeData> otherLocations;
 

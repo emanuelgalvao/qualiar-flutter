@@ -18,7 +18,9 @@ class HomeViewModel extends ChangeNotifier {
     handleAction(LoadData());
   }
 
-  ValueNotifier<HomeState> state = ValueNotifier(Loading());
+  ValueNotifier<HomeState> state = ValueNotifier(
+    Loading(toolbarIcon: AppIcons.light),
+  );
 
   void handleAction(HomeAction action) {
     switch (action) {
@@ -32,10 +34,12 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void _loadData() async {
-    var homeData = await homeRepository.getHomeData();
-    homeData.toolbarIcon =
-        themeProvider.isDarkMode ? AppIcons.light : AppIcons.dark;
-    state.value = Reender(data: homeData);
+    state.value = Loading(toolbarIcon: themeProvider.isDarkMode ? AppIcons.light : AppIcons.dark);
+    final homeData = await homeRepository.getHomeData();
+    state.value = Reender(
+      toolbarIcon: themeProvider.isDarkMode ? AppIcons.light : AppIcons.dark,
+      data: homeData,
+    );
   }
 
   void _goToDetails(BuildContext context, int locationId) {
@@ -45,7 +49,8 @@ class HomeViewModel extends ChangeNotifier {
     );
   }
 
-  void _swapTheme() {
-    themeProvider.swapTheme();
+  void _swapTheme() async {
+    await themeProvider.swapTheme();
+    state.value.toolbarIcon = themeProvider.isDarkMode ? AppIcons.light : AppIcons.dark;
   }
 }

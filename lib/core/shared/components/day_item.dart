@@ -22,14 +22,17 @@ class DayItem extends StatelessWidget {
       child: GlassContainer(
         color: value.airPollutionLevel.color,
         margin: const EdgeInsets.symmetric(horizontal: 2),
-        child: SizedBox(
+        child: Container(
           height: principalCardAvailableWidth / 5,
+          padding: EdgeInsets.all(4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                value == 0.0 ? "?" : value.toString(),
-                style: Theme.of(context).textTheme.titleSmall,
+              FittedBox(
+                child: Text(
+                  value == 0.0 ? "?" : value.toStringAsFixed(2),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ),
               Text(
                 day,

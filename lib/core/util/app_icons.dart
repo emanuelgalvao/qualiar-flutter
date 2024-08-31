@@ -9,6 +9,7 @@ class AppIcons {
   // Bottom Navigation
   static final home = isIos ? CupertinoIcons.home : Icons.home;
   static final myLocations = isIos ? CupertinoIcons.map : Icons.map;
+  static final worldCities = isIos ? CupertinoIcons.globe : Icons.public;
   static final about = isIos ? CupertinoIcons.info : Icons.info;
 
   // Home

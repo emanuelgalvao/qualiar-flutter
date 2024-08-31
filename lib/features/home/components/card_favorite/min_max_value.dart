@@ -18,12 +18,24 @@ class MinMaxValue extends StatelessWidget {
     return GlassContainer(
       color: value.airPollutionLevel.color,
       borderRadius: 25,
-      child: SizedBox(
+      child: Container(
         height: 45,
+        padding: EdgeInsets.all(8),
         child: Center(
-          child: Text(
-            '$title $value',
-            style: Theme.of(context).textTheme.bodyMedium,
+          child: FittedBox(
+            child: Row(
+              children: [
+                Text(
+                  '$title ${value.toStringAsFixed(2)}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                SizedBox(width: 5),
+                Text(
+                  'μg/m³',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ],
+            ),
           ),
         ),
       ),

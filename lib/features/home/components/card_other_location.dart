@@ -5,10 +5,9 @@ import '../../../core/shared/components/glass_container.dart';
 import '../../../core/util/app_icons.dart';
 import '../../../data/model/other_location_home_data.dart';
 
-
 class CardOtherLocation extends StatelessWidget {
   final OtherLocationHomeData otherLocation;
-  final Function (int) onTap;
+  final Function(int) onTap;
 
   const CardOtherLocation({
     required this.otherLocation,
@@ -30,18 +29,28 @@ class CardOtherLocation extends StatelessWidget {
                 color: otherLocation.value.airPollutionLevel.color,
                 child: Container(
                   width: 100,
+                  padding: EdgeInsets.all(4),
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        otherLocation.value.toString(),
-                        style: Theme.of(context).textTheme.titleMedium,
+                      FittedBox(
+                        child: Text(
+                          otherLocation.value.toStringAsFixed(2),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ),
                       Text(
-                        otherLocation.value.airPollutionLevel.message,
+                        'μg/m³',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${otherLocation.value.airPollutionLevel.message}\n',
+                        style: Theme.of(context).textTheme.labelMedium,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -56,7 +65,7 @@ class CardOtherLocation extends StatelessWidget {
               ),
               Icon(
                 AppIcons.go,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
                 size: 30,
               ),
             ],

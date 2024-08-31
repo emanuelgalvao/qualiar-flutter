@@ -15,7 +15,7 @@ extension ScreenData on AirPollutionLevel {
       case AirPollutionLevel.veryUnhealthy:
         return Colors.purple;
       case AirPollutionLevel.hazardous:
-        return Colors.black;
+        return Colors.grey;
       case AirPollutionLevel.unknown:
         return Colors.white;
     }
@@ -28,11 +28,11 @@ extension ScreenData on AirPollutionLevel {
       case AirPollutionLevel.moderate:
         return 'Moderado';
       case AirPollutionLevel.unhealthyForSensitiveGroups:
-        return 'Não saudável para grupos sensíveis';
-      case AirPollutionLevel.unhealthy:
         return 'Pouco saudável';
+      case AirPollutionLevel.unhealthy:
+        return 'Não saudável';
       case AirPollutionLevel.veryUnhealthy:
-        return 'Muito prejudicial à saúde';
+        return 'Prejudicial à saúde';
       case AirPollutionLevel.hazardous:
         return 'Perigoso';
       case AirPollutionLevel.unknown:

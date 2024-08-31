@@ -1,6 +1,7 @@
 import 'package:air_pollution_app/features/about/screen/about_screen.dart';
 import 'package:air_pollution_app/features/home/screen/home_screen.dart';
 import 'package:air_pollution_app/features/locations/screens/locations_screen.dart';
+import 'package:air_pollution_app/features/world_cities/screen/world_cities_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../util/app_icons.dart';
@@ -21,6 +22,7 @@ class _TabsScreenState extends State<TabsScreen> {
     super.initState();
     _screens = [
       HomeScreen(),
+      WorldCitiesScreen(),
       LocationsScreen(),
       AboutScreen()
     ];
@@ -31,8 +33,10 @@ class _TabsScreenState extends State<TabsScreen> {
     return DefaultTabController(
       length: _screens.length,
       child: Scaffold(
+        extendBody: true,
         body: _screens[_selectedTabIndex],
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _selectedTabIndex,
           onTap: (index) {
             setState(() {
@@ -43,6 +47,10 @@ class _TabsScreenState extends State<TabsScreen> {
             BottomNavigationBarItem(
               icon: Icon(AppIcons.home),
               label: 'Início',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(AppIcons.worldCities),
+              label: 'Mundo',
             ),
             BottomNavigationBarItem(
               icon: Icon(AppIcons.myLocations),
