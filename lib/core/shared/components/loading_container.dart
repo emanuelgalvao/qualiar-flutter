@@ -12,16 +12,16 @@ class LoadingContainer extends StatelessWidget {
         child: Container(
           height: 120,
           padding: const EdgeInsets.all(20),
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primary),
+                backgroundColor: Colors.transparent,
               ),
               SizedBox(height: 10),
               Text(
                 'Carregando...',
-                style: TextStyle(color: Colors.white),
               ),
             ],
           ),

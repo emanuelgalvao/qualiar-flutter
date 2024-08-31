@@ -40,6 +40,18 @@ class _HomeScreenState extends State<HomeScreen> {
         valueListenable: homeViewModel.state,
         builder: (context, state, _) {
           return Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+            title: const Text(
+              'QualiAr',
+            ),
+            actions: [
+              IconButton(
+                onPressed: () => homeViewModel.handleAction(SwapTheme()),
+                icon: Icon(state.toolbarIcon),
+              )
+            ],
+          ),
             body: Stack(
               children: [
                 Container(
@@ -50,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
+                  height: double.infinity,
                   decoration: BoxDecoration(
                       color: Theme.of(context)
                           .colorScheme

@@ -58,21 +58,24 @@ class _WorldCitiesScreenState extends State<WorldCitiesScreen> {
                   child: switch (state) {
                     Loading() => const LoadingContainer(),
                     Reender() => SingleChildScrollView(
-                      child: OtherLocationsList(
-                          otherLocations: state.data
-                              .map((e) => OtherLocationHomeData(
-                                  id: e.id,
-                                  name: e.city,
-                                  uf: e.country,
-                                  value: e.value))
-                              .toList(),
-                          onTap: (id) => worldCitiesViewModel.handleAction(
-                            GoToDetails(
-                              context: context,
-                              id: id,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 60),
+                        child: OtherLocationsList(
+                            otherLocations: state.data
+                                .map((e) => OtherLocationHomeData(
+                                    id: e.id,
+                                    name: e.city,
+                                    uf: e.country,
+                                    value: e.value))
+                                .toList(),
+                            onTap: (id) => worldCitiesViewModel.handleAction(
+                              GoToDetails(
+                                context: context,
+                                id: id,
+                              ),
                             ),
                           ),
-                        ),
+                      ),
                     ),
                   },
                 ),

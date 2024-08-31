@@ -36,7 +36,7 @@ class CardFavoriteLocation extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge),
                   Icon(
                     AppIcons.go,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     size: 30,
                   ),
                 ],

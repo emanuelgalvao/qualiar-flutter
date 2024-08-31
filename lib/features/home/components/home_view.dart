@@ -19,37 +19,24 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          AppBar(
-            title: const Text(
-              'QualiAr Brasil',
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top,
+          bottom: MediaQuery.of(context).padding.bottom,
+        ),
+        child: Column(
+          children: [
+            CardFavoriteLocation(
+              favoriteLocation: reender.data.favoriteLocation,
+              onTap: onTapLocation,
             ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  onSwapTheme();
-                },
-                icon: Icon(reender.data.toolbarIcon),
-              )
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                CardFavoriteLocation(
-                  favoriteLocation: reender.data.favoriteLocation,
-                  onTap: onTapLocation,
-                ),
-                OtherLocationsList(
-                  otherLocations: reender.data.otherLocations,
-                  onTap: onTapLocation,
-                ),
-              ],
+            OtherLocationsList(
+              otherLocations: reender.data.otherLocations,
+              onTap: onTapLocation,
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

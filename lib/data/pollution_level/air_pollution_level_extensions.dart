@@ -15,7 +15,7 @@ extension ScreenData on AirPollutionLevel {
       case AirPollutionLevel.veryUnhealthy:
         return Colors.purple;
       case AirPollutionLevel.hazardous:
-        return Colors.black;
+        return Colors.grey;
       case AirPollutionLevel.unknown:
         return Colors.white;
     }

@@ -22,8 +22,8 @@ class _TabsScreenState extends State<TabsScreen> {
     super.initState();
     _screens = [
       HomeScreen(),
-      LocationsScreen(),
       WorldCitiesScreen(),
+      LocationsScreen(),
       AboutScreen()
     ];
   }
@@ -33,8 +33,10 @@ class _TabsScreenState extends State<TabsScreen> {
     return DefaultTabController(
       length: _screens.length,
       child: Scaffold(
+        extendBody: true,
         body: _screens[_selectedTabIndex],
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _selectedTabIndex,
           onTap: (index) {
             setState(() {
@@ -47,12 +49,12 @@ class _TabsScreenState extends State<TabsScreen> {
               label: 'Início',
             ),
             BottomNavigationBarItem(
-              icon: Icon(AppIcons.myLocations),
-              label: 'Meus Locais',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(AppIcons.worldCities),
               label: 'Mundo',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(AppIcons.myLocations),
+              label: 'Meus Locais',
             ),
             BottomNavigationBarItem(
               icon: Icon(AppIcons.about),

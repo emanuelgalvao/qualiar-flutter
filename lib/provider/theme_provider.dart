@@ -27,7 +27,7 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeData light = ThemeData.light().copyWith(
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white54,
+      backgroundColor: Colors.white,
       foregroundColor: Colors.black,
       titleTextStyle: TextStyle(
         fontSize: 20,
@@ -35,32 +35,32 @@ class ThemeProvider with ChangeNotifier {
       ),
     ),
     colorScheme: ThemeData.light().colorScheme.copyWith(
-          primary: Colors.green,
+          primary: Colors.black,
           surface: const Color(0xFFf5f5f5),
           background: Colors.white,
         ),
     textTheme: ThemeData.light().textTheme.copyWith(
         titleLarge: const TextStyle(
           fontSize: 30,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
         titleMedium: const TextStyle(
           fontSize: 26,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
         titleSmall: const TextStyle(
           fontSize: 20,
-          color: Colors.white,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
         bodyMedium: const TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 20,
         ),
         bodySmall: const TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 16,
         ),
         labelLarge: const TextStyle(
@@ -78,11 +78,11 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeData dark = ThemeData.dark().copyWith(
     appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.black54,
+        backgroundColor: Colors.black87,
         foregroundColor: Colors.white,
         titleTextStyle: TextStyle(fontSize: 20, color: Colors.white)),
     colorScheme: ThemeData.light().colorScheme.copyWith(
-          primary: Colors.green,
+          primary: Colors.white,
           surface: const Color(0xFF1a1a1a),
           background: const Color(0xFF2a2a2a),
         ),
@@ -126,7 +126,7 @@ class ThemeProvider with ChangeNotifier {
         ),
     bottomNavigationBarTheme:
         ThemeData.light().bottomNavigationBarTheme.copyWith(
-              backgroundColor: const Color(0xFF1a1a1a),
+              backgroundColor: Colors.black87,
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.grey,
             ),

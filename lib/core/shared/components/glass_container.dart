@@ -12,7 +12,7 @@ class GlassContainer extends StatelessWidget {
 
   const GlassContainer({
     super.key,
-    this.blur = 20,
+    this.blur = 10,
     this.opacity = 0.2,
     this.color = Colors.white,
     this.margin = const EdgeInsets.all(0),
@@ -36,7 +36,7 @@ class GlassContainer extends StatelessWidget {
               ),
               border: Border.all(
                 width: 1.5,
-                color: color.withOpacity(0.2),
+                color: color.withOpacity(0.05),
               ),
             ),
             child: child,

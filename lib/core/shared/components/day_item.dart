@@ -22,8 +22,9 @@ class DayItem extends StatelessWidget {
       child: GlassContainer(
         color: value.airPollutionLevel.color,
         margin: const EdgeInsets.symmetric(horizontal: 2),
-        child: SizedBox(
+        child: Container(
           height: principalCardAvailableWidth / 5,
+          padding: EdgeInsets.all(4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
